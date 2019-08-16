@@ -1,6 +1,6 @@
 package com.example.magnittest.dto
 
-data class Shops(
+data class Shop(
     val id: Int,
     val type: Int,
     val name: String,
