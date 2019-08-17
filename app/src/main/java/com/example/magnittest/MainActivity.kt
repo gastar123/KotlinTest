@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.magnittest.dto.Shop
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,9 +18,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        myLocationListener.setUpLocationListener(this)
-        var location = myLocationListener.imHere
-        Toast.makeText(this, "${location?.latitude} - ${location?.longitude}", Toast.LENGTH_LONG).show()
+        myLocationListener.setUpLocationListener(
+            this,
+            Consumer { t -> Toast.makeText(this, "${t?.latitude} - ${t?.longitude}", Toast.LENGTH_LONG).show() })
         init()
     }
 
