@@ -1,5 +1,6 @@
 package com.example.magnittest
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.magnittest.dto.Shop
-import java.util.ArrayList
+import java.util.*
 
 class ShopsAdapter(val callback: Callback) : RecyclerView.Adapter<ShopsAdapter.ShopHolder>() {
 
@@ -36,9 +37,38 @@ class ShopsAdapter(val callback: Callback) : RecyclerView.Adapter<ShopsAdapter.S
         private val tvStatus = itemView.findViewById<TextView>(R.id.tvStatus)
         private val ivShop = itemView.findViewById<ImageView>(R.id.ivShop)
 
+        private var HOUR = Calendar.HOUR_OF_DAY
+
         fun bind(shop: Shop) {
+            val instance = Calendar.getInstance()
+            var hour = instance.get(Calendar.HOUR_OF_DAY)
+            var minute = instance.get(Calendar.MINUTE) + (hour * 60)
+            // Почему-то могут быть null.
+            var opening = shop.opening
+            var closing = shop.closing
+            if (opening != null && closing != null && opening.contains(":") && closing.contains(":")) {
+                var open = opening.split(":").map { it.toInt() }
+                var close = closing.split(":").map { it.toInt() }
+                var openMinute = open[0] * 60 + open[1]
+                var closeMinute = close[0] * 60 + close[1]
+                Log.e("TIME", "$openMinute - $closeMinute time: $minute")
+                if ((minute > openMinute) && (minute < closeMinute)) {
+                    tvStatus.text = "Магазин открыт"
+                } else if ((closeMinute < openMinute) && ((minute > openMinute) || (minute < closeMinute))) {
+                    tvStatus.text = "Магазин открыт"
+                } else {
+                    tvStatus.text = "Магазин закрыт"
+                }
+                if (opening.equals(closing)) {
+                    tvWorkTime.text = "Круглосуточно"
+                    tvStatus.text = "Магазин открыт"
+                } else {
+                    tvWorkTime.text = "$opening - $closing"
+                }
+            } else {
+                tvStatus.text = "Нет информации"
+            }
             tvName.text = shop.name
-            tvWorkTime.text = "${shop.opening} - ${shop.closing}"
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(shops[adapterPosition])
             }

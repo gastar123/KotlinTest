@@ -11,4 +11,5 @@ data class Shop(
     val opening: String,
     val closing: String,
     val plastic: Boolean,
-    val modification: String)
+    val modification: String,
+    var distance: Float)

@@ -25,7 +25,7 @@ interface MagnitApi {
         fun create(): MagnitApi {
             val okHttpClient = OkHttpClient().newBuilder()
                 .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(40, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .build()
             val retrofit = Retrofit.Builder()

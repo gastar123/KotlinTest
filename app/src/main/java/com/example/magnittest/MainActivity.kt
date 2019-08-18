@@ -1,7 +1,6 @@
 package com.example.magnittest
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.magnittest.dto.Shop
@@ -12,21 +11,22 @@ class MainActivity : AppCompatActivity() {
 
     private var model: Model? = null
     private var shopsAdapter: ShopsAdapter? = null
-    private var myLocationListener = MyLocationListener()
+    private var myLocationListener: MyLocationListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        myLocationListener.setUpLocationListener(
-            this,
-            Consumer { t -> Toast.makeText(this, "${t?.latitude} - ${t?.longitude}", Toast.LENGTH_LONG).show() })
         init()
     }
 
     private fun init() {
         model = Model(this)
         model!!.getShops()
+        myLocationListener = MyLocationListener(this)
+        myLocationListener!!.setUpLocationListener(
+            Consumer { location ->  model!!.checkShopList(location)
+            myLocationListener!!.stop()})
 
         shopsAdapter = ShopsAdapter(object : ShopsAdapter.Callback {
             override fun onItemClicked(shop: Shop) {
@@ -40,5 +40,9 @@ class MainActivity : AppCompatActivity() {
 
     fun updateView(shops: List<Shop>) {
         shopsAdapter!!.changeData(shops)
+    }
+
+    fun setDistation() {
+
     }
 }
