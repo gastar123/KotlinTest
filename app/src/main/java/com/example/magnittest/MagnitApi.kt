@@ -1,6 +1,7 @@
 package com.example.magnittest
 
 import com.example.magnittest.dto.Shop
+import com.example.magnittest.dto.Type
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -20,6 +21,10 @@ interface MagnitApi {
     )
     @GET("magnit-api/shops")
     fun getShops(): Observable<List<Shop>>
+
+    @Headers("version:4")
+    @GET("magnit-api/shops/types")
+    fun getTypes(): Observable<List<Type>>
 
     companion object NetworkUtils {
         fun create(): MagnitApi {

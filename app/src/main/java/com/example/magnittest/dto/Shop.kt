@@ -1,5 +1,7 @@
 package com.example.magnittest.dto
 
+import java.io.Serializable
+
 data class Shop(
     val id: Int,
     val type: Int,
@@ -12,4 +14,8 @@ data class Shop(
     val closing: String,
     val plastic: Boolean,
     val modification: String,
-    var distance: Float)
+    var shopType: String,
+    var distance: Float
+) : Serializable
+
+data class Type(val id: Int, val name: String)

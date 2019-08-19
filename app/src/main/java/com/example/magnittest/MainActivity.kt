@@ -1,9 +1,14 @@
 package com.example.magnittest
 
+import android.content.Intent
+import android.location.Location
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.magnittest.dto.Shop
+import com.yandex.mapkit.MapKitFactory
 import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -12,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     private var model: Model? = null
     private var shopsAdapter: ShopsAdapter? = null
     private var myLocationListener: MyLocationListener? = null
+    private var shops: List<Shop>? = null
+    private var location: Location? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,15 +29,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         model = Model(this)
-        model!!.getShops()
+        model!!.getTypes()
         myLocationListener = MyLocationListener(this)
         myLocationListener!!.setUpLocationListener(
-            Consumer { location ->  model!!.checkShopList(location)
-            myLocationListener!!.stop()})
+            Consumer { location ->
+                this.location = location
+                Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
+                model!!.checkShopList(location)
+                myLocationListener!!.stop()
+            })
 
         shopsAdapter = ShopsAdapter(object : ShopsAdapter.Callback {
             override fun onItemClicked(shop: Shop) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                val intent = Intent(this@MainActivity, ShopActivity::class.java)
+                intent.putExtra("shop", shop)
+                startActivity(intent)
             }
         })
 
@@ -39,10 +52,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateView(shops: List<Shop>) {
+        this.shops = shops
         shopsAdapter!!.changeData(shops)
     }
 
-    fun setDistation() {
-
+    fun fabOnClick(v: View) {
+        val intent = Intent(this, MapActivity::class.java)
+        var lngList = shops!!.map { it.lng }.toDoubleArray()
+        var latList = shops!!.map { it.lat }.toDoubleArray()
+        intent.putExtra("lngList", lngList)
+        intent.putExtra("latList", latList)
+        intent.putExtra("myLng", location!!.longitude)
+        intent.putExtra("myLat", location!!.latitude)
+        startActivity(intent)
     }
 }
