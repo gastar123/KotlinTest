@@ -16,24 +16,39 @@ class MapActivity : AppCompatActivity() {
         MapKitFactory.initialize(this)
         setContentView(R.layout.activity_map)
 
-        var lngList = intent.getDoubleArrayExtra("lngList")
-        var latList = intent.getDoubleArrayExtra("latList")
-        var myLng = intent.getDoubleExtra("myLng", 0.0)
-        var myLat = intent.getDoubleExtra("myLat", 0.0)
+        var requestCode = intent.getStringExtra("requestCode")
 
-        mapView.map.move(
-            CameraPosition(Point(myLat, myLng), 12f, 0.0f, 0.0f)
-        )
+        if (requestCode.equals("shopList")) {
+            var lngList = intent.getDoubleArrayExtra("lngList")
+            var latList = intent.getDoubleArrayExtra("latList")
+            var myLng = intent.getDoubleExtra("myLng", 0.0)
+            var myLat = intent.getDoubleExtra("myLat", 0.0)
 
-        mapView.map.mapObjects.addPlacemark(
-            Point(myLat, myLng),
-            ImageProvider.fromResource(this, R.drawable.yandex_logo_en_white))
-
-        for (i in 0 until lngList.size) {
-            mapView.map.mapObjects.addPlacemark(
-                Point(latList[i], lngList[i]),
-                ImageProvider.fromResource(this, R.drawable.yandex_logo_ru)
+            mapView.map.move(
+                CameraPosition(Point(myLat, myLng), 12f, 0.0f, 0.0f)
             )
+
+            mapView.map.mapObjects.addPlacemark(
+                Point(myLat, myLng),
+                ImageProvider.fromResource(this, R.drawable.yandex_logo_en_white))
+
+            for (i in 0 until lngList.size) {
+                mapView.map.mapObjects.addPlacemark(
+                    Point(latList[i], lngList[i]),
+                    ImageProvider.fromResource(this, R.drawable.yandex_logo_ru)
+                )
+            }
+        } else if (requestCode.equals("oneShop")) {
+            var latitude = intent.getDoubleExtra("latitude", 0.0)
+            var longitude = intent.getDoubleExtra("longitude", 0.0)
+
+            mapView.map.move(
+                CameraPosition(Point(latitude, longitude), 12f, 0.0f, 0.0f)
+            )
+
+            mapView.map.mapObjects.addPlacemark(
+                Point(latitude, longitude),
+                ImageProvider.fromResource(this, R.drawable.yandex_logo_ru))
         }
     }
 

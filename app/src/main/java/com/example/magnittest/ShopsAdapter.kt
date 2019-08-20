@@ -67,7 +67,9 @@ class ShopsAdapter(val callback: Callback) : RecyclerView.Adapter<ShopsAdapter.S
                 }
             } else {
                 tvStatus.text = "Нет информации"
+                tvWorkTime.text = "-"
             }
+            shop.status = tvStatus.text.toString()
             tvName.text = shop.name
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(shops[adapterPosition])

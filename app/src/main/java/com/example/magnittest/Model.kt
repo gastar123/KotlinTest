@@ -31,12 +31,27 @@ class Model(private val mainActivity: MainActivity) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ shopList ->
                 Log.e("SERVER", "ПОЛУЧИЛ ДАННЫЕ")
-                val filteredShops = shopList.filter { shop -> shop.type != 0 }
-                
+                val filteredShops = shopList.filter { shop -> shop.type != 0 }.map { shop ->
+                    when (shop.type) {
+                        1 -> shop.shopType = "Магазин Магнит"
+                        2 -> shop.shopType = "Магнит Семейный"
+                        3 -> shop.shopType = "Магнит Косметик"
+                        4 -> shop.shopType = "Магнит Аптека"
+                        5 -> shop.shopType = "Магнит-Опт"
+                        else -> shop.shopType = "unknown"
+                    }
+                    shop
+                }
                 this.shopList = filteredShops
                 checkShopList(myLocation)
             },
                 { error -> Log.e("ERROR", error.message, error) })
+    }
+
+    fun getSales(shopId: Int) {
+        magnitApi.getSales(shopId, "МПМ")
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
     }
 
     fun checkShopList(myLocation: Location?) {

@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, MapActivity::class.java)
         var lngList = shops!!.map { it.lng }.toDoubleArray()
         var latList = shops!!.map { it.lat }.toDoubleArray()
+        intent.putExtra("requestCode", "shopList")
         intent.putExtra("lngList", lngList)
         intent.putExtra("latList", latList)
         intent.putExtra("myLng", location!!.longitude)
