@@ -22,7 +22,7 @@ data class Shop(
 
 data class Type(val id: Int, val name: String)
 
-data class Sales(
+data class Sale(
     val id: Int,
     val type: Int,
     val name: String,

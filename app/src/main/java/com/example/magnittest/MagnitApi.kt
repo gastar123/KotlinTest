@@ -1,6 +1,6 @@
 package com.example.magnittest
 
-import com.example.magnittest.dto.Sales
+import com.example.magnittest.dto.Sale
 import com.example.magnittest.dto.Shop
 import com.example.magnittest.dto.Type
 import io.reactivex.Observable
@@ -29,7 +29,7 @@ interface MagnitApi {
 
     @Headers("version:4")
     @GET("magnit-api/discounts/with-publisher")
-    fun getSales(shopId: Int, publisher: String): Observable<List<Sales>>
+    fun getSales(shopId: Int, publisher: String): Observable<List<Sale>>
 
     companion object NetworkUtils {
         fun create(): MagnitApi {
