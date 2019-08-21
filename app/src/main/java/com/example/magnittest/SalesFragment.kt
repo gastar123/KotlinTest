@@ -10,17 +10,23 @@ import kotlinx.android.synthetic.main.fragment_sales.*
 
 class SalesFragment : Fragment() {
 
-    private lateinit var sales: List<Sale>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sales, container, false)
 
+        val args = arguments
+        val sale = arguments!!.getSerializable("sale") as Sale
+
+        tvSaleName.text = sale.name
+//        tvSaleDate.text = sale.startDate
         return view
     }
 
     companion object {
         fun newInstance(sale: Sale): SalesFragment {
             val args = Bundle()
+
+            args.putSerializable("sale", sale)
 
             val fragment = SalesFragment()
             fragment.arguments = args

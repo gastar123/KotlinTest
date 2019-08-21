@@ -6,7 +6,7 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.runtime.image.ImageProvider
-import kotlinx.android.synthetic.main.map.*
+import kotlinx.android.synthetic.main.activity_map.*
 
 class MapActivity : AppCompatActivity() {
 

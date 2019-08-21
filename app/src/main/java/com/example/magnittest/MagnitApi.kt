@@ -11,6 +11,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 
@@ -29,7 +30,7 @@ interface MagnitApi {
 
     @Headers("version:4")
     @GET("magnit-api/discounts/with-publisher")
-    fun getSales(shopId: Int, publisher: String): Observable<List<Sale>>
+    fun getSales(@Query("shopId") shopId: Int, @Query("publisher") publisher: String): Observable<List<Sale>>
 
     companion object NetworkUtils {
         fun create(): MagnitApi {

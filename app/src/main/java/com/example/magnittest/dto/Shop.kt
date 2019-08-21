@@ -42,6 +42,6 @@ data class Sale(
     val showDate: Date,
     val unit1: String,
     val barcode: String
-)
+) : Serializable
 
 data class SalesType(val id: Int, val name: String)

@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var model: Model? = null
     private var shopsAdapter: ShopsAdapter? = null
     private var myLocationListener: MyLocationListener? = null
     private var shops: List<Shop>? = null
@@ -28,14 +27,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        model = Model(this)
-        model!!.getTypes()
+        val mainPresenter = MainPresenter(this)
+        mainPresenter.getTypes()
         myLocationListener = MyLocationListener(this)
         myLocationListener!!.setUpLocationListener(
             Consumer { location ->
                 this.location = location
                 Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
-                model!!.checkShopList(location)
+                mainPresenter.checkShopList(location)
                 myLocationListener!!.stop()
             })
 

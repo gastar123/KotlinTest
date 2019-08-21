@@ -7,7 +7,7 @@ import com.example.magnittest.dto.Type
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 
-class Model(private val mainActivity: MainActivity) {
+object Model {
 
     var shopList: List<Shop> = ArrayList()
     var typeList: List<Type> = ArrayList()
@@ -15,18 +15,18 @@ class Model(private val mainActivity: MainActivity) {
 
     private val magnitApi = MagnitApi.create()
 
-    fun getTypes() {
+    fun getTypes(mainPresenter: MainPresenter) {
         magnitApi.getTypes()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ typeList ->
                 Log.e("SERVER", "ПОЛУЧИЛ ТИПЫ")
                 this.typeList = typeList
-                getShops()
+                getShops(mainPresenter)
             },
                 { error -> Log.e("ERROR", error.message, error) })
     }
 
-    private fun getShops() {
+    private fun getShops(mainPresenter: MainPresenter) {
         magnitApi.getShops()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ shopList ->
@@ -43,28 +43,18 @@ class Model(private val mainActivity: MainActivity) {
                     shop
                 }
                 this.shopList = filteredShops
-                checkShopList(myLocation)
+                mainPresenter.checkShopList(myLocation)
             },
                 { error -> Log.e("ERROR", error.message, error) })
     }
 
-    fun getSales(shopId: Int) {
+    fun getSales(shopId: Int, salesActivity: SalesActivity) {
         magnitApi.getSales(shopId, "МПМ")
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
+            .subscribe({ salesActivity.setSaleList(it)
+                Log.e("SERVER", "ПОЛУЧИЛ АКЦИИ") },
+                { error -> Log.e("ERROR", error.message, error) })
     }
 
-    fun checkShopList(myLocation: Location?) {
-        this.myLocation = myLocation
-        if (shopList.isNotEmpty() && myLocation != null) {
-            var distance = FloatArray(1)
-            var sortedList = shopList.map { shop ->
-                Location.distanceBetween(myLocation.latitude, myLocation.longitude, shop.lat, shop.lng, distance)
-                shop.distance = distance[0]
-                shop
-            }.sortedBy { it.distance }
-            sortedList.subList(0, 100).forEach { Log.e("SHOP", it.toString()) }
-            mainActivity.updateView(sortedList)
-        }
-    }
+
 }

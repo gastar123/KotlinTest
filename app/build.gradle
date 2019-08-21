@@ -51,4 +51,5 @@ dependencies {
     implementation 'com.yandex.android:mapkit:3.4.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }
