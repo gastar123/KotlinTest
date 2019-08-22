@@ -1,9 +1,10 @@
 package com.example.magnittest
 
+import android.content.Intent
 import android.location.Location
 import android.util.Log
 
-class MainPresenter(private val mainActivity: MainActivity) {
+class MainPresenter(private val splashActivity: SplashActivity) {
 
     fun getTypes() {
         Model.getTypes(this)
@@ -19,7 +20,14 @@ class MainPresenter(private val mainActivity: MainActivity) {
                 shop
             }.sortedBy { it.distance }
             sortedList.subList(0, 100).forEach { Log.e("SHOP", it.toString()) }
-            mainActivity.updateView(sortedList)
+            Model.shopList = sortedList
+            toNextScreen()
         }
+    }
+
+    private fun toNextScreen() {
+        val intent = Intent(splashActivity, MainActivity::class.java)
+        splashActivity.startActivity(intent)
+        splashActivity.finish()
     }
 }

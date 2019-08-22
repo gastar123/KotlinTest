@@ -57,6 +57,4 @@ object Model {
                 Log.e("SERVER", "ПОЛУЧИЛ АКЦИИ") },
                 { error -> Log.e("ERROR", error.message, error) })
     }
-
-
 }
