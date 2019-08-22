@@ -34,19 +34,30 @@ class MapActivity : AppCompatActivity() {
 
             mapView.map.mapObjects.addPlacemark(Point(myLat, myLng))
 
-            for (i in 0 until lngList.size) {
-                mapView.map.mapObjects.addPlacemark(
-                    Point(latList[i], lngList[i]),
-                    ImageProvider.fromResource(this, R.drawable.yandex_logo_ru)
-                )
-            }
-
-            val i = mapView.map.mapObjects.addClusterizedPlacemarkCollection(ClusterListener { cluster ->
+            val cluster = mapView.map.mapObjects.addClusterizedPlacemarkCollection(ClusterListener { cluster ->
                 cluster.placemarks
                 Log.e("MAP", "${cluster.size}")
             })
 
-            i.clusterPlacemarks(10.0, 15)
+            for (i in 0 until shopList.size) {
+//                mapView.map.mapObjects.addPlacemark(
+//                            Point(latList[i], lngList[i]),
+//                    ImageProvider.fromResource(this, R.drawable.yandex_logo_ru)
+//                )
+                var image = 0
+                when(shopList[i].type) {
+                    1 -> image = R.drawable.magnit_magnit
+                    2 -> image = R.drawable.magnit_hiper
+                    3 -> image = R.drawable.magnit_cosmetic
+                    4 -> image = R.drawable.magnit_pharmacy
+                    5 -> image = R.drawable.magnit_wholesale
+                }
+                cluster.addPlacemark(
+                    Point(latList[i], lngList[i]),
+                    ImageProvider.fromResource(this, image))
+            }
+
+            cluster.clusterPlacemarks(2.0, 15)
 
         } else if (requestCode.equals("oneShop")) {
             var latitude = intent.getDoubleExtra("latitude", 0.0)
