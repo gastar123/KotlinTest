@@ -6,17 +6,18 @@
 
     <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher" android:id="@+id/ivSale"/>
+            android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher" android:id="@+id/ivSale"
+    />
     <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tvSaleName"/>
     <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tvSaleDate"/>
     <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/tvSalePrice"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/tvSaleOldPrice"/>
 </LinearLayout>

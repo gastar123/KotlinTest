@@ -4,6 +4,8 @@ import android.location.Location
 import android.util.Log
 import com.example.magnittest.dto.Shop
 import com.example.magnittest.dto.Type
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 

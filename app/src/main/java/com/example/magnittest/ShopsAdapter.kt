@@ -71,6 +71,15 @@ class ShopsAdapter(val callback: Callback) : RecyclerView.Adapter<ShopsAdapter.S
             }
             shop.status = tvStatus.text.toString()
             tvName.text = shop.name
+
+            when (shop.type) {
+                1 -> ivShop.setImageResource(R.drawable.magnit_magnit)
+                2 -> ivShop.setImageResource(R.drawable.magnit_hiper)
+                3 -> ivShop.setImageResource(R.drawable.magnit_cosmetic)
+                4 -> ivShop.setImageResource(R.drawable.magnit_pharmacy)
+                5 -> ivShop.setImageResource(R.drawable.magnit_wholesale)
+            }
+
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) callback.onItemClicked(shops[adapterPosition])
             }

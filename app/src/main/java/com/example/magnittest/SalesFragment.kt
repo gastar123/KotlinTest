@@ -1,24 +1,43 @@
 package com.example.magnittest
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.magnittest.dto.Sale
-import kotlinx.android.synthetic.main.fragment_sales.*
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
+import kotlinx.android.synthetic.main.fragment_sales.view.*
+import java.lang.Exception
+import java.text.SimpleDateFormat
 
 class SalesFragment : Fragment() {
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_sales, container, false)
 
-        val args = arguments
         val sale = arguments!!.getSerializable("sale") as Sale
 
-        tvSaleName.text = sale.name
-//        tvSaleDate.text = sale.startDate
+        val format1 = SimpleDateFormat("dd.MM")
+        val startDate = format1.format(sale.startDate)
+        val endDate = format1.format(sale.endDate)
+
+        view.tvSaleDate.text = "$startDate - $endDate"
+        view.tvSaleName.text = sale.name
+        view.tvSalePrice.text = sale.price.toString()
+        view.tvSaleOldPrice.text = sale.oldPrice.toString()
+
+        Picasso.with(activity)
+            .load("http://mobiapp.tander.ru/magnit-api/images/220/${sale.image}")
+            .placeholder(R.drawable.progress_animation)
+            .into(view.ivSale)
+
         return view
     }
 

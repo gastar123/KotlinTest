@@ -17,8 +17,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Note List"
+                android:text="Shop List"
                 android:textSize="24sp"/>
+
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMain"
                 android:layout_width="match_parent"

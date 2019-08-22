@@ -22,12 +22,12 @@ class ShopActivity : AppCompatActivity() {
         shopAddress.text = shop.address
         shopStatus.text = shop.status
         if (shop.status.equals("Нет информации")) {
-            shopTime.text = "-"
+            shopTime.text = " - "
         }
         if (shop.opening == null || shop.closing == null) {
             shopTime.text = "-"
         } else if (shop.opening.equals(shop.closing)) {
-            shopTime.text = ("Круглосуточно")
+            shopTime.text = "Круглосуточно"
         } else {
         shopTime.text = "${shop.opening} - ${shop.closing}"
         }
