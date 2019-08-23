@@ -48,7 +48,7 @@ class MapActivity : AppCompatActivity() {
 
             myLocation = mapView.map.mapObjects.addPlacemark(
                 Point(myLat, myLng),
-                ImageProvider.fromResource(this, R.drawable.my_location)
+                ImageProvider.fromResource(this, R.drawable.me2)
             )
 
             val cluster = mapView.map.mapObjects.addClusterizedPlacemarkCollection(ClusterListener {
@@ -56,11 +56,6 @@ class MapActivity : AppCompatActivity() {
             })
 
             for (i in 0 until shopList.size) {
-//                mapView.map.mapObjects.addPlacemark(
-//                            Point(latList[i], lngList[i]),
-//                    ImageProvider.fromResource(this, R.drawable.yandex_logo_ru)
-//                )
-
                 cluster.addPlacemark(
                     Point(latList[i], lngList[i]),
                     ImageProvider.fromResource(this, shopList[i].image)
@@ -102,12 +97,11 @@ class MapActivity : AppCompatActivity() {
                 if (myLocation == null) {
                     myLocation = mapView.map.mapObjects.addPlacemark(
                         Point(latitude, longitude),
-                        ImageProvider.fromResource(this@MapActivity, R.drawable.my_location)
+                        ImageProvider.fromResource(this@MapActivity, R.drawable.me2)
                     )
                 } else {
                     myLocation?.geometry = Point(latitude, longitude)
                 }
-
             }
         })
     }

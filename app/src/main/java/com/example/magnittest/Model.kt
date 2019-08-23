@@ -2,6 +2,7 @@ package com.example.magnittest
 
 import android.location.Location
 import android.util.Log
+import android.widget.Toast
 import com.example.magnittest.dto.Shop
 import com.example.magnittest.dto.Type
 import com.squareup.picasso.Callback
@@ -25,7 +26,8 @@ object Model {
                 this.typeList = typeList
                 getShops(mainPresenter)
             },
-                { error -> Log.e("ERROR", error.message, error) })
+                { error -> Log.e("ERROR", error.message, error)
+                mainPresenter.setToast()})
     }
 
     private fun getShops(mainPresenter: MainPresenter) {
@@ -47,7 +49,8 @@ object Model {
                 this.shopList = filteredShops
                 mainPresenter.checkShopList(myLocation)
             },
-                { error -> Log.e("ERROR", error.message, error) })
+                { error -> Log.e("ERROR", error.message, error)
+                mainPresenter.setToast()})
     }
 
     fun getSales(shopId: Int, salesActivity: SalesActivity) {
@@ -55,6 +58,7 @@ object Model {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ salesActivity.setSaleList(it)
                 Log.e("SERVER", "ПОЛУЧИЛ АКЦИИ") },
-                { error -> Log.e("ERROR", error.message, error) })
+                { error -> Log.e("ERROR", error.message, error)
+                Toast.makeText(salesActivity, "Нет подключения к серверу", Toast.LENGTH_SHORT).show() })
     }
 }

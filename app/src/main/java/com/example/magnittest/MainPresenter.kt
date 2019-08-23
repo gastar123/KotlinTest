@@ -3,6 +3,7 @@ package com.example.magnittest
 import android.content.Intent
 import android.location.Location
 import android.util.Log
+import android.widget.Toast
 
 class MainPresenter(private val splashActivity: SplashActivity) {
 
@@ -17,7 +18,7 @@ class MainPresenter(private val splashActivity: SplashActivity) {
             var sortedList = Model.shopList.map { shop ->
                 Location.distanceBetween(myLocation.latitude, myLocation.longitude, shop.lat, shop.lng, distance)
                 shop.distance = distance[0]
-                when(shop.type) {
+                when (shop.type) {
                     1 -> shop.image = R.drawable.magnit_magnit
                     2 -> shop.image = R.drawable.magnit_hiper
                     3 -> shop.image = R.drawable.magnit_cosmetic
@@ -36,5 +37,9 @@ class MainPresenter(private val splashActivity: SplashActivity) {
         val intent = Intent(splashActivity, MainActivity::class.java)
         splashActivity.startActivity(intent)
         splashActivity.finish()
+    }
+
+    fun setToast() {
+        Toast.makeText(splashActivity, "Нет подключения к серверу", Toast.LENGTH_SHORT).show()
     }
 }
