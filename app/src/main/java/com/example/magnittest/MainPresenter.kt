@@ -17,6 +17,13 @@ class MainPresenter(private val splashActivity: SplashActivity) {
             var sortedList = Model.shopList.map { shop ->
                 Location.distanceBetween(myLocation.latitude, myLocation.longitude, shop.lat, shop.lng, distance)
                 shop.distance = distance[0]
+                when(shop.type) {
+                    1 -> shop.image = R.drawable.magnit_magnit
+                    2 -> shop.image = R.drawable.magnit_hiper
+                    3 -> shop.image = R.drawable.magnit_cosmetic
+                    4 -> shop.image = R.drawable.magnit_pharmacy
+                    5 -> shop.image = R.drawable.magnit_wholesale
+                }
                 shop
             }.sortedBy { it.distance }
             sortedList.subList(0, 100).forEach { Log.e("SHOP", it.toString()) }

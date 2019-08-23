@@ -23,6 +23,7 @@ class MapActivity : AppCompatActivity() {
         var shopList = Model.shopList
         var myLat = Model.myLocation!!.latitude
         var myLng = Model.myLocation!!.longitude
+        var image = 0
 
         if (requestCode.equals("shopList")) {
             var lngList = shopList.map { it.lng }.toDoubleArray()
@@ -44,17 +45,10 @@ class MapActivity : AppCompatActivity() {
 //                            Point(latList[i], lngList[i]),
 //                    ImageProvider.fromResource(this, R.drawable.yandex_logo_ru)
 //                )
-                var image = 0
-                when(shopList[i].type) {
-                    1 -> image = R.drawable.magnit_magnit
-                    2 -> image = R.drawable.magnit_hiper
-                    3 -> image = R.drawable.magnit_cosmetic
-                    4 -> image = R.drawable.magnit_pharmacy
-                    5 -> image = R.drawable.magnit_wholesale
-                }
+
                 cluster.addPlacemark(
                     Point(latList[i], lngList[i]),
-                    ImageProvider.fromResource(this, image))
+                    ImageProvider.fromResource(this, shopList[i].image))
             }
 
             cluster.clusterPlacemarks(2.0, 15)
@@ -64,7 +58,7 @@ class MapActivity : AppCompatActivity() {
             var longitude = intent.getDoubleExtra("longitude", 0.0)
 
             mapView.map.move(
-                CameraPosition(Point(latitude, longitude), 12f, 0.0f, 0.0f)
+                CameraPosition(Point(latitude, longitude), 15f, 0.0f, 0.0f)
             )
 
             mapView.map.mapObjects.addPlacemark(

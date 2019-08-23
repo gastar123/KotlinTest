@@ -17,7 +17,8 @@ data class Shop(
     val modification: String,
     var shopType: String,
     var status: String,
-    var distance: Float
+    var distance: Float,
+    var image: Int
 ) : Serializable
 
 data class Type(val id: Int, val name: String)
