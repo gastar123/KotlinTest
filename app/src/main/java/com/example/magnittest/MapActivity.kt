@@ -2,16 +2,27 @@ package com.example.magnittest
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
+import android.view.View
+import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.location.Location
+import com.yandex.mapkit.location.LocationListener
+import com.yandex.mapkit.location.LocationManager
+import com.yandex.mapkit.location.LocationStatus
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.ClusterListener
 import com.yandex.mapkit.map.IconStyle
+import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.runtime.image.ImageProvider
 import kotlinx.android.synthetic.main.activity_map.*
 
 class MapActivity : AppCompatActivity() {
+
+    private lateinit var locationManager: LocationManager
+    private var myLocation: PlacemarkMapObject? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +34,8 @@ class MapActivity : AppCompatActivity() {
         var shopList = Model.shopList
         var myLat = Model.myLocation!!.latitude
         var myLng = Model.myLocation!!.longitude
-        var image = 0
+
+        locationManager = MapKitFactory.getInstance().createLocationManager()
 
         if (requestCode.equals("shopList")) {
             var lngList = shopList.map { it.lng }.toDoubleArray()
@@ -33,11 +45,14 @@ class MapActivity : AppCompatActivity() {
                 CameraPosition(Point(myLat, myLng), 12f, 0.0f, 0.0f)
             )
 
-            mapView.map.mapObjects.addPlacemark(Point(myLat, myLng))
 
-            val cluster = mapView.map.mapObjects.addClusterizedPlacemarkCollection(ClusterListener { cluster ->
-                cluster.placemarks
-                Log.e("MAP", "${cluster.size}")
+            myLocation = mapView.map.mapObjects.addPlacemark(
+                Point(myLat, myLng),
+                ImageProvider.fromResource(this, R.drawable.my_location)
+            )
+
+            val cluster = mapView.map.mapObjects.addClusterizedPlacemarkCollection(ClusterListener {
+                it.appearance.setIcon(ImageProvider.fromResource(this, R.drawable.magnit_many))
             })
 
             for (i in 0 until shopList.size) {
@@ -48,14 +63,16 @@ class MapActivity : AppCompatActivity() {
 
                 cluster.addPlacemark(
                     Point(latList[i], lngList[i]),
-                    ImageProvider.fromResource(this, shopList[i].image))
+                    ImageProvider.fromResource(this, shopList[i].image)
+                )
             }
 
-            cluster.clusterPlacemarks(2.0, 15)
+            cluster.clusterPlacemarks(7.0, 15)
 
         } else if (requestCode.equals("oneShop")) {
             var latitude = intent.getDoubleExtra("latitude", 0.0)
             var longitude = intent.getDoubleExtra("longitude", 0.0)
+            var image = intent.getIntExtra("image", 0)
 
             mapView.map.move(
                 CameraPosition(Point(latitude, longitude), 15f, 0.0f, 0.0f)
@@ -63,9 +80,36 @@ class MapActivity : AppCompatActivity() {
 
             mapView.map.mapObjects.addPlacemark(
                 Point(latitude, longitude),
-                ImageProvider.fromResource(this, R.drawable.yandex_logo_ru)
+                ImageProvider.fromResource(this, image)
             )
         }
+    }
+
+    fun onClick(v: View) {
+        locationManager!!.requestSingleUpdate(object : LocationListener {
+            override fun onLocationStatusUpdated(p0: LocationStatus) {
+
+            }
+
+            override fun onLocationUpdated(location: Location) {
+                val latitude = location.position.latitude
+                val longitude = location.position.longitude
+                mapView.map.move(
+                    CameraPosition(Point(location.position.latitude, location.position.longitude), 15f, 0.0f, 0.0f),
+                    Animation(Animation.Type.SMOOTH, 2f),
+                    null
+                )
+                if (myLocation == null) {
+                    myLocation = mapView.map.mapObjects.addPlacemark(
+                        Point(latitude, longitude),
+                        ImageProvider.fromResource(this@MapActivity, R.drawable.my_location)
+                    )
+                } else {
+                    myLocation?.geometry = Point(latitude, longitude)
+                }
+
+            }
+        })
     }
 
     override fun onStart() {

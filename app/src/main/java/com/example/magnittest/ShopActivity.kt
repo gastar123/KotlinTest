@@ -38,6 +38,7 @@ class ShopActivity : AppCompatActivity() {
         intent.putExtra("requestCode", "oneShop")
         intent.putExtra("latitude", shop.lat)
         intent.putExtra("longitude", shop.lng)
+        intent.putExtra("image", shop.image)
         startActivity(intent)
     }
 
