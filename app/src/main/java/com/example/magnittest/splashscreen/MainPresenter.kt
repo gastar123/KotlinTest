@@ -1,9 +1,12 @@
-package com.example.magnittest
+package com.example.magnittest.splashscreen
 
 import android.content.Intent
 import android.location.Location
 import android.util.Log
 import android.widget.Toast
+import com.example.magnittest.Model
+import com.example.magnittest.R
+import com.example.magnittest.shops.MainActivity
 
 class MainPresenter(private val splashActivity: SplashActivity) {
 

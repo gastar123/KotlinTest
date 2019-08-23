@@ -1,4 +1,4 @@
-package com.example.magnittest
+package com.example.magnittest.behavior
 
 import android.content.Context
 import android.util.AttributeSet
@@ -9,7 +9,7 @@ import androidx.core.view.ViewCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-abstract class AbsScrollingFABBehavior(context: Context, attrs: AttributeSet) : FloatingActionButton.Behavior() {
+abstract class ScrollingFABBehavior(context: Context, attrs: AttributeSet) : FloatingActionButton.Behavior() {
 
     private val SCROLL_DISTANCE = 8
     private var scrollingDown = false

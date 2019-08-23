@@ -38,7 +38,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:onClick="fabOnClick"
-            app:layout_behavior="com.example.magnittest.ScrollingFABBottomBehavior"/>
+            app:layout_behavior="com.example.magnittest.behavior.ScrollingFABBottomBehavior"/>
 
 
 

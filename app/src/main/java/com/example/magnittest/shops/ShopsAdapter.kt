@@ -1,4 +1,4 @@
-package com.example.magnittest
+package com.example.magnittest.shops
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.magnittest.R
 import com.example.magnittest.dto.Shop
 import java.util.*
 

@@ -1,9 +1,10 @@
-package com.example.magnittest
+package com.example.magnittest.sales
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.magnittest.dto.Sale
+import com.example.magnittest.sales.SalesFragment
 import java.util.*
 
 class SalesPagerAdapter(fragmentManager: FragmentManager) :

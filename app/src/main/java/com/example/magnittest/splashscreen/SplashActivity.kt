@@ -1,4 +1,4 @@
-package com.example.magnittest
+package com.example.magnittest.splashscreen
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.magnittest.R
 import io.reactivex.functions.Consumer
 
 class SplashActivity : AppCompatActivity() {
@@ -36,12 +37,7 @@ class SplashActivity : AppCompatActivity() {
             )
         }
         if (LOCATION_GRANTED) {
-            myLocationListener!!.setUpLocationListener(
-                Consumer { location ->
-                    Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
-                    mainPresenter.checkShopList(location)
-                    myLocationListener!!.stop()
-                })
+            setLocationListener()
         }
 
     }
@@ -53,14 +49,18 @@ class SplashActivity : AppCompatActivity() {
             }
         }
         if (LOCATION_GRANTED) {
-            myLocationListener!!.setUpLocationListener(
-                Consumer { location ->
-                    Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
-                    mainPresenter.checkShopList(location)
-                    myLocationListener!!.stop()
-                })
+            setLocationListener()
         } else {
             Toast.makeText(this, "Требуется установить разрешения", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun setLocationListener() {
+        myLocationListener!!.setUpLocationListener(
+            Consumer { location ->
+                Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
+                mainPresenter.checkShopList(location)
+                myLocationListener!!.stop()
+            })
     }
 }

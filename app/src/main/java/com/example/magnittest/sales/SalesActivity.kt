@@ -1,7 +1,9 @@
-package com.example.magnittest
+package com.example.magnittest.sales
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.magnittest.Model
+import com.example.magnittest.R
 import com.example.magnittest.dto.Sale
 import kotlinx.android.synthetic.main.activity_sales.*
 

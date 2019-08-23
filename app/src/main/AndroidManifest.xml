@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>-->
 
     <application
             android:allowBackup="true"
@@ -13,10 +12,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity android:name=".shops.MainActivity"
                   android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".SalesActivity"
+        <activity android:name=".sales.SalesActivity"
                   android:screenOrientation="portrait">
         </activity>
         <activity android:name=".ShopActivity"
@@ -26,7 +25,7 @@
                   android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".splashscreen.SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
             <intent-filter>

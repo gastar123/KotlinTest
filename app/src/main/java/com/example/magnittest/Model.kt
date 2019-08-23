@@ -5,10 +5,9 @@ import android.util.Log
 import android.widget.Toast
 import com.example.magnittest.dto.Shop
 import com.example.magnittest.dto.Type
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
+import com.example.magnittest.sales.SalesActivity
+import com.example.magnittest.splashscreen.MainPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 
 object Model {
 

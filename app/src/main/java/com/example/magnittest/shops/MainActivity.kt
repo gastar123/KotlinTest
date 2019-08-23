@@ -1,15 +1,12 @@
-package com.example.magnittest
+package com.example.magnittest.shops
 
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.magnittest.*
 import com.example.magnittest.dto.Shop
-import com.yandex.mapkit.MapKitFactory
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -24,13 +21,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        shopsAdapter = ShopsAdapter(object : ShopsAdapter.Callback {
-            override fun onItemClicked(shop: Shop) {
-                val intent = Intent(this@MainActivity, ShopActivity::class.java)
-                intent.putExtra("shop", shop)
-                startActivity(intent)
-            }
-        })
+        shopsAdapter =
+            ShopsAdapter(object : ShopsAdapter.Callback {
+                override fun onItemClicked(shop: Shop) {
+                    val intent = Intent(this@MainActivity, ShopActivity::class.java)
+                    intent.putExtra("shop", shop)
+                    startActivity(intent)
+                }
+            })
 
         shopsAdapter!!.changeData(Model.shopList)
 

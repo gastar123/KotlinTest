@@ -1,4 +1,4 @@
-package com.example.magnittest
+package com.example.magnittest.splashscreen
 
 import android.annotation.SuppressLint
 import android.content.Context
