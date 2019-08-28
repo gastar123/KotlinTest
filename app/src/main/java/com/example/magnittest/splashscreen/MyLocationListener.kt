@@ -17,8 +17,13 @@ class MyLocationListener(context: Context) : LocationListener {
     @SuppressLint("MissingPermission")
     fun setUpLocationListener(consumer: Consumer<Location>) {
         this.consumer = consumer
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
-        imHere = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+            imHere = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, this)
+            imHere = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        }
     }
 
     fun stop() {
@@ -33,7 +38,9 @@ class MyLocationListener(context: Context) : LocationListener {
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
     }
 
+    @SuppressLint("MissingPermission")
     override fun onProviderEnabled(provider: String?) {
+        imHere = locationManager.getLastKnownLocation(provider)
     }
 
     override fun onProviderDisabled(provider: String?) {
