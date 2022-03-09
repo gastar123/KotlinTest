@@ -8,11 +8,12 @@ import android.location.LocationManager
 import android.os.Bundle
 import io.reactivex.functions.Consumer
 
-class MyLocationListener(context: Context) : LocationListener {
+class MyLocationListener(context: Context, presenter: MainPresenter) : LocationListener {
 
     var imHere: Location? = null
     var consumer: Consumer<Location>? = null
     var locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    var presenter = presenter
 
     @SuppressLint("MissingPermission")
     fun setUpLocationListener(consumer: Consumer<Location>) {
@@ -40,7 +41,10 @@ class MyLocationListener(context: Context) : LocationListener {
 
     @SuppressLint("MissingPermission")
     override fun onProviderEnabled(provider: String?) {
-        imHere = locationManager.getLastKnownLocation(provider)
+        var location = locationManager.getLastKnownLocation(provider)
+        if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
+            consumer?.accept(location)
+        }
     }
 
     override fun onProviderDisabled(provider: String?) {

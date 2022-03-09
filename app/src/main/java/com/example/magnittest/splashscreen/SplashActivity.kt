@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.magnittest.Model
 import com.example.magnittest.R
 import io.reactivex.functions.Consumer
 
@@ -24,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
 
         mainPresenter = MainPresenter(this)
         mainPresenter.getTypes()
-        myLocationListener = MyLocationListener(this)
+        myLocationListener = MyLocationListener(this, mainPresenter)
 
         val hasReadContactPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
@@ -59,6 +60,9 @@ class SplashActivity : AppCompatActivity() {
         myLocationListener!!.setUpLocationListener(
             Consumer { location ->
                 Log.e("LOCATION", "ПОЛУЧИЛ ЛОКАЦИЮ")
+                if (Model.shopList.isEmpty()) {
+                    mainPresenter.getTypes()
+                }
                 mainPresenter.checkShopList(location)
                 myLocationListener!!.stop()
             })

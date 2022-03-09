@@ -19,12 +19,13 @@ class SalesActivity : AppCompatActivity() {
         val shopId = intent.getIntExtra("shopId", 0)
         Model.getSales(shopId, this)
 
-        pagerAdapter = SalesPagerAdapter(supportFragmentManager)
-        viewPager.adapter = pagerAdapter
+//        pagerAdapter = SalesPagerAdapter(supportFragmentManager)
+//        viewPager.adapter = pagerAdapter
     }
 
     fun setSaleList(saleList: List<Sale>) {
         this.saleList = saleList
-        pagerAdapter.changeData(saleList)
+        customViewPager.setList(saleList)
+//        pagerAdapter.changeData(saleList)
     }
 }
